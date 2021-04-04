@@ -117,242 +117,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js/effect.js":[function(require,module,exports) {
-"use strict";
+})({"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.addEventCardTransition = addEventCardTransition;
-exports.removeEventCardTransition = removeEventCardTransition;
-exports.addInfoCardTransition = addInfoCardTransition;
-exports.removeInfoCardTransition = removeInfoCardTransition;
-
-function addEventCardTransition() {
-  var e = document.getElementsByClassName("event-card")[0];
-  if (!e.classList.contains("event-card-show")) e.classList.add("event-card-show");
-}
-
-function removeEventCardTransition() {
-  var e = document.getElementsByClassName("event-card")[0];
-  if (e.classList.contains("event-card-show")) e.classList.remove("event-card-show");
-}
-
-function addInfoCardTransition() {
-  var e = document.getElementsByClassName("info-card")[0];
-  if (!e.classList.contains("info-card-show")) e.classList.add("info-card-show");
-}
-
-function removeInfoCardTransition() {
-  var e = document.getElementsByClassName("info-card")[0];
-  if (e.classList.contains("info-card-show")) e.classList.remove("info-card-show");
-}
-},{}],"js/control.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setButtons = setButtons;
-exports.getActiveOption = getActiveOption;
-exports.getControlButtonInfo = getControlButtonInfo;
-exports.fillControlButtonInfo = fillControlButtonInfo;
-exports.registerClickListenerForOptions = registerClickListenerForOptions;
-exports.registerMouseEnterListenerForControlButtons = registerMouseEnterListenerForControlButtons;
-
-var _effect = require("./effect");
-
-var OPTIONS = {
-  policies: {
-    count: 5,
-    options: ["Education Promotion", "Long-hour Farming", "Military Recruitment", "Military Retirement", "Scientist Retirement"]
-  },
-  research: {
-    count: 3,
-    options: ["Water", "Land", "Crops"]
-  }
-};
-var BUTTON_INFO = [// Policies
-{
-  name: "Education Promotion",
-  desc: "Promotes education among farmers and transform them to scientists."
-}, {
-  name: "Long-hour Farming",
-  desc: "Enforces farmers to work for extra hours to harvest more crops."
-}, {
-  name: "Military Recruitment",
-  desc: "Recruits more soldiers among farmers."
-}, {
-  name: "Military Retirement",
-  desc: "Asks some soldiers to retire, so they turn back to farmers."
-}, {
-  name: "Scientist Retirement",
-  desc: "Asks some scientists to retire, so they turn back to farmers."
-}, // Research
-{
-  name: "Water",
-  desc: "Asks scientists to study how to improve water quality."
-}, {
-  name: "Land",
-  desc: "Asks scientists to study how to improve land quality."
-}, {
-  name: "Crops",
-  desc: "Asks scientists to study how to increase crop production."
-}];
-
-function getOption(str) {
-  return str === "Policies" ? OPTIONS.policies : OPTIONS.research;
-}
-
-function setButtons(option) {
-  var buttons = document.getElementsByClassName("buttons")[0];
-  buttons.innerHTML = ""; // clear 
-
-  for (var i = 0; i < option.count; i++) {
-    var node = document.createElement("div");
-    node.innerText = option.options[i];
-    node.className = "cbtn";
-    buttons.appendChild(node);
-  }
-}
-
-function getActiveOption() {
-  var opts = document.getElementsByClassName("opt");
-
-  for (var i = 0; i < opts.length; i++) {
-    if (opts[i].classList.contains("active")) return getOption(opts[i].innerText);
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
 
-  return null;
+  return bundleURL;
 }
 
-function getControlButtonInfo(btn) {
-  for (var i = 0; i < BUTTON_INFO.length; i++) {
-    if (btn.innerText === BUTTON_INFO[i].name) return BUTTON_INFO[i];
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
   }
 
-  return null;
+  return '/';
 }
 
-function fillControlButtonInfo(info) {
-  document.getElementsByClassName("info-name")[0].innerText = info.name;
-  document.getElementsByClassName("info-desc")[0].innerText = info.desc;
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
 }
 
-function registerClickListenerForOptions() {
-  var opts = document.getElementsByClassName("opt");
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
 
-  for (var i = 0; i < opts.length; i++) {
-    opts[i].addEventListener("click", function (e) {
-      var opts = document.getElementsByClassName("opt");
+function updateLink(link) {
+  var newLink = link.cloneNode();
 
-      for (var i = 0; i < opts.length; i++) {
-        opts[i].className = "opt";
-      }
-
-      e.currentTarget.className = "opt active"; // set buttons
-
-      setButtons(getActiveOption()); // register listeners for newly added buttons
-
-      registerMouseEnterListenerForControlButtons();
-    }, false);
-  }
-}
-
-function registerMouseEnterListenerForControlButtons() {
-  var cbtns = document.getElementsByClassName("cbtn");
-
-  for (var i = 0; i < cbtns.length; i++) {
-    cbtns[i].addEventListener("mouseenter", function (e) {
-      fillControlButtonInfo(getControlButtonInfo(e.currentTarget));
-      (0, _effect.addInfoCardTransition)();
-    }, false);
-    cbtns[i].addEventListener("mouseleave", function (e) {
-      (0, _effect.removeInfoCardTransition)();
-    }, false);
-  }
-}
-},{"./effect":"js/effect.js"}],"js/event.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.generateEvent = generateEvent;
-exports.fillEventText = fillEventText;
-exports.registerClickListenerForEventButton = registerClickListenerForEventButton;
-
-var _effect = require("./effect");
-
-var SUBJECTS = ["Fuel Leakage", "Gifts From Future", "Farmer Riots"];
-var ACTIONS = [{
-  type: "Increased",
-  desc: ["How cyberpunk! The water nearby was improved after absorbing the fuel!", "Amazing! A high-tech machine from future was found by a farmer yesterday in the farm largely increasing the standard of living!", "What? Farmers started a riot yesterday but ended up improving our life!"]
-}, {
-  type: "Decreased",
-  desc: ["Alert! The only water body nearby was contaminated last night due to the leakage of fuels in famers' bionic arms!", "Unfortunate! A scrapped machine was misused by farmers as a high-tech reducing the standard of living!", "Such a tragedy! Farmers started a riot yesterday! They damaged everything!"]
-}];
-var TARGETS = ["Crop Production", "Technology Level"]; // generate a event with the following format
-// {
-//     subject: <subject of event>,
-//     action: <action type>,
-//     desc: <description of event>,
-//     target: <result of event>
-// }
-
-function generateEvent() {
-  var subjectIndex = Math.floor(Math.random() * 10 % SUBJECTS.length);
-  var actionIndex = Math.floor(Math.random() * 10 % ACTIONS.length);
-  var targetIndex = Math.floor(Math.random() * 10 % TARGETS.length);
-  return {
-    subject: SUBJECTS[subjectIndex],
-    action: ACTIONS[actionIndex].type,
-    desc: ACTIONS[actionIndex].desc[subjectIndex],
-    target: TARGETS[targetIndex]
+  newLink.onload = function () {
+    link.remove();
   };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
 }
 
-function fillEventText(option) {
-  document.getElementsByClassName("subject")[0].innerText = option.subject;
-  document.getElementsByClassName("desc")[0].innerText = option.desc;
-  document.getElementsByClassName("result")[0].innerText = option.subject + " " + option.action + " " + option.target + ".";
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
 }
 
-function registerClickListenerForEventButton() {
-  var ebtn = document.getElementsByClassName("event-btn")[0];
-  ebtn.addEventListener("click", function () {
-    return (0, _effect.removeEventCardTransition)();
-  }, false);
-}
-},{"./effect":"js/effect.js"}],"main.js":[function(require,module,exports) {
-'use strict';
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"transition.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
 
-var _control = require("./js/control");
-
-var _event = require("./js/event");
-
-var _effect = require("./js/effect");
-
-function setup() {
-  (0, _control.setButtons)((0, _control.getActiveOption)());
-  (0, _control.registerMouseEnterListenerForControlButtons)();
-  (0, _event.registerClickListenerForEventButton)();
-  (0, _control.registerClickListenerForOptions)();
-  (0, _event.fillEventText)((0, _event.generateEvent)()); // DELTE THIS
-
-  (0, _effect.addEventCardTransition)();
-}
-
-setup(); // register listeners
-
-var panel = document.getElementsByClassName("panel")[0];
-panel.addEventListener("click", togglePanel, false); // event handlers
-// for data panel
-
-function togglePanel(e) {
-  if (e.currentTarget.style.height === "10px") e.currentTarget.style.height = "40%";else e.currentTarget.style.height = "10px";
-}
-},{"./js/control":"js/control.js","./js/event":"js/event.js","./js/effect":"js/effect.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -380,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62032" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60646" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -556,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/transition.1ef38d37.js.map

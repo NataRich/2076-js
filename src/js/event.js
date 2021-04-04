@@ -1,3 +1,5 @@
+import { removeEventCardTransition } from "./effect"
+
 const SUBJECTS = ["Fuel Leakage", "Gifts From Future", "Farmer Riots"]
 
 const ACTIONS = [
@@ -39,6 +41,19 @@ export function generateEvent() {
         subject: SUBJECTS[subjectIndex],
         action: ACTIONS[actionIndex].type,
         desc: ACTIONS[actionIndex].desc[subjectIndex],
-        target: ACTIONS[targetIndex]
+        target: TARGETS[targetIndex]
     }
+}
+
+
+export function fillEventText(option) {
+    document.getElementsByClassName("subject")[0].innerText = option.subject;
+    document.getElementsByClassName("desc")[0].innerText = option.desc;
+    document.getElementsByClassName("result")[0].innerText = option.subject + " " + option.action + " " + option.target + ".";
+}
+
+
+export function registerClickListenerForEventButton() {
+    var ebtn = document.getElementsByClassName("event-btn")[0];
+    ebtn.addEventListener("click", () => removeEventCardTransition(), false);
 }
