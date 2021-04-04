@@ -12,10 +12,11 @@
   <!-- Static in the center -->
   <div class="window">
     <!-- Static at the top -->
-    <div class="title">Cyberpunk 2076</div>
+    <div class="title">Cyberfarm 2076</div>
 
     <!-- Static in the center -->
     <div class="screen">
+        <div class="overlay next-day-btn" style="z-index: 2;">Next Day</div>
         <!-- Scrolls out from left -->
         <div class="overlay event-card" style="z-index: 2;">
           <h2 class="subject"></h2>
@@ -28,19 +29,20 @@
           <h2 class="info-name"></h2>
           <p class="info-desc"></p>
         </div>
+        <!-- Triggers unfold -->
+        <div class="overlay panel-trigger-btn" style="z-index: 2;">Statistics</div>
         <!-- Unfolds up -->
         <div class="overlay panel" style="z-index: 2;">
             <h2 class="panel-title">Statistics</h2>
             <div class="panel-core">
                 <div class="panel-core-container">
-                    <div class="food">Food</div>
+                    <div class="food">Total Food</div>
                     <div class="data food-data">1000</div>
-                    <!-- TODO: change hardcoded values -->
                     <div class="data food-change-data delta">[+200]</div>
                 </div>
                 <div class="panel-core-container">
                     <div class="survival-day">Survival Days</div>
-                    <div class="data survival-day-data">39</div>
+                    <div class="data survival-day-data" style="color: red;"></div>
                 </div>
             </div>
             <div class="panel-general">
@@ -52,42 +54,45 @@
                 <div class="panel-general-container">
                     <div class="item1">Farmers</div>
                     <div class="item2">
-                        <div class="data farmer-pop-data">1000</div>
-                        <div class="data farmer-pop-change-data delta">[-100]</div>
+                        <div class="data farmer-pop-data"></div>
+                        <div class="data farmer-pop-change-data delta"></div>
                     </div>
-                    <div class="item3 data farmer-food-change-data delta">[-50]</div>
+                    <div class="item3">
+                        <div class="data farmer-food-gain-data delta"></div>
+                        <div class="data farmer-food-cost-data delta"></div>
+                    </div>
                 </div>
                 <div class="panel-general-container">
                     <div class="item1">Criminals</div>
                     <div class="item2">
-                        <div class="data criminal-pop-data">1000</div>
-                        <div class="data criminal-pop-change-data delta">[-100]</div>
+                        <div class="data criminal-pop-data"></div>
+                        <div class="data criminal-pop-change-data delta"></div>
                     </div>
-                    <div class="item3 data criminal-food-change-data delta">[-50]</div>
+                    <div class="item3 data criminal-food-change-data delta"></div>
                 </div>
                 <div class="panel-general-container">
                     <div class="item1">Prisoners</div>
                     <div class="item2">
-                        <div class="data prisoner-pop-data">1000</div>
-                        <div class="data prisoner-pop-change-data delta">[-100]</div>
+                        <div class="data prisoner-pop-data"></div>
+                        <div class="data prisoner-pop-change-data delta"></div>
                     </div>
-                    <div class="item3 data prisoner-food-change-data delta">[-50]</div>
+                    <div class="item3 data prisoner-food-change-data delta"></div>
                 </div>
                 <div class="panel-general-container">
                     <div class="item1">Soldiers</div>
                     <div class="item2">
-                        <div class="data soldier-pop-data">1000</div>
-                        <div class="data soldier-pop-change-data delta">[-100]</div>
+                        <div class="data soldier-pop-data"></div>
+                        <div class="data soldier-pop-change-data delta"></div>
                     </div>
-                    <div class="item3 data soldier-food-change-data delta">[-50]</div>
+                    <div class="item3 data soldier-food-change-data delta"></div>
                 </div>
                 <div class="panel-general-container">
                     <div class="item1">Scientists</div>
                     <div class="item2">
-                        <div class="data scientist-pop-data">1000</div>
-                        <div class="data scientist-pop-change-data delta">[-100]</div>
+                        <div class="data scientist-pop-data"></div>
+                        <div class="data scientist-pop-change-data delta"></div>
                     </div>
-                    <div class="item3 data scientist-food-change-data delta">[-50]</div>
+                    <div class="item3 data scientist-food-change-data delta"></div>
                 </div>
             </div>
         </div>

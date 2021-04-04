@@ -6,4 +6,12 @@
     right: 10px;
 }
 
+.panel-show {
+    bottom: 0;
+}
+
+.panel-trigger-btn-hide {
+    bottom: 41%;
+}
+
 /*# sourceMappingURL=/transition.1ef38d37.css.map */
