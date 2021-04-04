@@ -3,7 +3,7 @@
 import { getActiveOption, registerClickListenerForOptions, registerMouseEnterListenerForControlButtons, setButtons } from "./js/control";
 import { generateEvent, fillEventText, registerClickListenerForEventButton } from './js/event'
 import { addEventCardTransition } from './js/effect'
-
+import { changeDataColor } from './js/panel'
 
 
 function setup() {
@@ -12,6 +12,8 @@ function setup() {
 
     registerClickListenerForEventButton();
     registerClickListenerForOptions();
+
+    changeDataColor();
 
     fillEventText(generateEvent()) // DELTE THIS
     addEventCardTransition();
