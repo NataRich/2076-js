@@ -1,7 +1,7 @@
 'use strict'
 
 import { addPanelTransition, removePanelTransition, addPanelTriggerButtonTransition, removePanelTriggerButtonTransition } from './effect'
-import { population, other, foodCost } from './varibale';
+import { population, other } from './varibale';
 import * as cal from './calFunction';
 
 export function registerClickListenerForPanelTriggerButton() {
@@ -70,6 +70,12 @@ export function updatePanelData() {
     var10.innerText = "[" + representAsString(population.scientists - parseString(var9.innerText)) + "]";
 
 
+
+    var var101 = document.getElementsByClassName("food-data")[0];
+    var101.innerText = other.food;
+
+    var var102 = document.getElementsByClassName("tech-fc")[0];
+    var102.innerText = other.tf;
 
     var var11 = document.getElementsByClassName("survival-day-data")[0];
     var11.innerText = other.day;

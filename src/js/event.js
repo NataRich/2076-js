@@ -1,4 +1,4 @@
-import { removeEventCardTransition } from "./effect"
+import { addEventCardTransition, removeEventCardTransition } from "./effect"
 
 const SUBJECTS = ["Fuel Leakage", "Gifts From Future", "Farmer Riots"]
 
@@ -23,16 +23,7 @@ const ACTIONS = [
 
 const TARGETS = ["Crop Production", "Technology Level"]
 
-
-
-// generate a event with the following format
-// {
-//     subject: <subject of event>,
-//     action: <action type>,
-//     desc: <description of event>,
-//     target: <result of event>
-// }
-export function generateEvent() {
+function generateEvent() {
     var subjectIndex = Math.floor((Math.random() * 10) % SUBJECTS.length);
     var actionIndex = Math.floor((Math.random() * 10) % ACTIONS.length);
     var targetIndex = Math.floor((Math.random() * 10) % TARGETS.length);
@@ -45,13 +36,19 @@ export function generateEvent() {
     }
 }
 
-
-export function fillEventText(option) {
+function fillEventText(option) {
     document.getElementsByClassName("subject")[0].innerText = option.subject;
     document.getElementsByClassName("desc")[0].innerText = option.desc;
     document.getElementsByClassName("result")[0].innerText = option.subject + " " + option.action + " " + option.target + ".";
 }
 
+export function randomGenerateEventCard() {
+    var res = Math.floor(Math.random() * 10);
+    if (res === 1 || res === 2) {
+        fillEventText(generateEvent());
+        addEventCardTransition();
+    }
+}
 
 export function registerClickListenerForEventButton() {
     var ebtn = document.getElementsByClassName("event-btn")[0];

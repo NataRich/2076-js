@@ -1,4 +1,6 @@
-import { addInfoCardTransition, removeInfoCardTransition } from "./effect";
+import { canEnforcePolicy, canResearch, cropResearch, eduPromotion, landResearch, longHourFarming, militaryRecruitment, militaryRetirement, scientistRetirement, waterResearch } from "./calFunction";
+import { addControlButtonTransition, addInfoCardTransition, removeControlButtonTransition, removeInfoCardTransition } from "./effect";
+import { updatePanelData } from "./panel";
 
 const OPTIONS = {
     policies: {
@@ -60,7 +62,7 @@ export function setButtons(option) {
     for (var i = 0; i < option.count; i++) {
         var node = document.createElement("div");
         node.innerText = option.options[i];
-        node.className = "cbtn"
+        node.className = "cbtn " + (OPTIONS.policies.options.includes(option.options[i]) ? "Policies" : "Research");
         buttons.appendChild(node);
     }
 }
@@ -95,13 +97,16 @@ export function registerClickListenerForOptions() {
             for (var i = 0; i < opts.length; i++) {
                 opts[i].className = "opt"
             }
-            e.currentTarget.className = "opt active"
+            e.currentTarget.className = "opt active ";
     
             // set buttons
             setButtons(getActiveOption())
 
             // register listeners for newly added buttons
             registerMouseEnterListenerForControlButtons();
+            registerClickListenerForControlButtons();
+
+            updateControlButtonStyle();
         }, false);
     }
 }
@@ -117,5 +122,72 @@ export function registerMouseEnterListenerForControlButtons() {
         cbtns[i].addEventListener("mouseleave", e => {
             removeInfoCardTransition();
         }, false)
+    }
+}
+
+export function updateControlButtonStyle() {
+    if (!canResearch()) {
+        addControlButtonTransition("Research");
+    } else {
+        removeControlButtonTransition("Research");
+    }
+
+    if (!canEnforcePolicy()) {
+        addControlButtonTransition("Policies");
+    } else {
+        removeControlButtonTransition("Policies");
+    }
+}
+
+export function registerClickListenerForControlButtons() {
+    var cbtns = document.getElementsByClassName("cbtn");
+    for (var i = 0; i < cbtns.length; i++) {
+        cbtns[i].addEventListener("click", e => {
+            var ele = e.currentTarget;
+            console.log(ele.classList)
+            
+            if (canResearch() && ele.classList.contains("Research")) {
+                switch (ele.innerText) {
+                    case "Water":
+                        waterResearch();
+                        break;
+                    case "Land":
+                        landResearch();
+                        break;
+                    case "Crops":
+                        cropResearch();
+                        break;
+                    default:
+                        console.log("Unknown research.");
+                        break;
+                }
+            }
+            
+            if (canEnforcePolicy() && ele.classList.contains("Policies")) {
+                switch (ele.innerText) {
+                    case "Education Promotion":
+                        eduPromotion();
+                        break;
+                    case "Long-hour Farming":
+                        longHourFarming();
+                        break;
+                    case "Military Recruitment":
+                        militaryRecruitment();
+                        break;
+                    case "Military Retirement":
+                        militaryRetirement();
+                        break;
+                    case "Scientist Retirement":
+                        scientistRetirement();
+                        break;
+                    default:
+                        console.log("Unknown policy.");
+                        break;
+                }
+            }
+
+            updatePanelData();
+            updateControlButtonStyle();
+        }, false);
     }
 }
