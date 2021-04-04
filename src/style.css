@@ -32,20 +32,65 @@ body {
   min-height: 600px;
   margin: auto;
   position: relative;
-  
-  border: 1px solid red; /* DELETE THIS */
+
+  overflow: hidden;
 }
 
 .event-card {
   width: 30%;
-  height: 30%;
+  height: 45%;
   max-width: 500px;
   max-height: 250px;
   border-radius: 10px;
   top: 10px;
-  left: 10px;
+  left: -30%;
+
+  transition: all 1.5s ease-in-out;
+
+  background-color: white;
 
   border: 2px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.event-card .subject {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  text-align: center;
+}
+
+.event-card .desc {
+  width: 80%;
+  font-size: large;
+  margin: auto;
+}
+
+.event-card .result {
+  width: 100%;
+  margin: 15px 0 15px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.event-card .event-btn {
+  width: 50px;
+  height: 20px;
+  border: 1px solid black;
+  margin: auto;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-card .event-btn:hover {
+  color: white;
+  background-color: black;
 }
 
 .info-card {
@@ -55,9 +100,29 @@ body {
   max-height: 250px;
   border-radius: 10px;
   bottom: 10px;
-  right: 10px;
+  right: -30%;
+
+  transition: all 1.5s ease-in-out;
+
+  background-color: white;
 
   border: 2px solid black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.info-card .info-name {
+  width: 100%;
+  text-align: center;
+  margin: 10px 0 10px 0;
+}
+
+.info-card .info-desc {
+  width: 80%;
+  text-align: center;
 }
 
 .control {
@@ -105,10 +170,9 @@ body {
   align-items: center;
 }
 
-.control .buttons .btn {
-  width: 160px;
+.control .buttons .cbtn {
+  width: 180px;
   height: 60px;
-  margin: 40px;
   cursor: pointer;
 
   border: 1px solid black;
@@ -125,6 +189,8 @@ body {
   left: 0;
   right: 0;
   margin: 0 auto;
+
+  background-color: white;
 
   border: 2px solid black;
 }
