@@ -1,6 +1,4 @@
-import { population } from  './variables.js'
-import { other } from  './variables.js'
-
+import { population, other } from './varibale'
 export function exchangeFarmer(){
     if (other.count <= 3){
         population.farmers--;
