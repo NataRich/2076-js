@@ -144,7 +144,6 @@ export function registerClickListenerForControlButtons() {
     for (var i = 0; i < cbtns.length; i++) {
         cbtns[i].addEventListener("click", e => {
             var ele = e.currentTarget;
-            console.log(ele.classList)
             
             if (canResearch() && ele.classList.contains("Research")) {
                 switch (ele.innerText) {

@@ -4,7 +4,7 @@ import { getActiveOption, registerClickListenerForOptions, registerMouseEnterLis
 import { registerClickListenerForEventButton } from './js/event';
 import { updatePanelData } from './js/panel';
 import { registerClickListenerForPanelTriggerButton } from './js/panel';
-import { registerClickListenerForNextDayButton, registerClickListenerForGameRestart } from './js/lifecycle'
+import { registerClickListenerForNextDayButton, registerClickListenerForGameRestart } from './js/lifecycle';
 
 function setup() {
     setButtons(getActiveOption());
