@@ -145,22 +145,22 @@ body {
   position: absolute;
 }
 
-.cropland{
-  display: flex;
-  height: 150px;
-  width: auto;
-}
-
 .background_item_container {
   width: 100%;
   height: 100%;
   position: aboslute;
 }
 
+.cropland{
+  display: flex;
+  height: 150px;
+  width: auto;
+}
+
 .background_item{
-z-index: 0.5;
-height: 100px;
-width: auto;
-display: flex;
-position: relative;
+  z-index: 0.5;
+  height: 100px;
+  width: auto;
+  display: flex;
+  position: relative;
 }
