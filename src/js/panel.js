@@ -75,7 +75,7 @@ export function updatePanelData() {
     var101.innerText = other.food;
 
     var var102 = document.getElementsByClassName("tech-fc")[0];
-    var102.innerText = other.tf;
+    var102.innerText = Math.floor(other.tf * 10) / 10;
 
     var var11 = document.getElementsByClassName("survival-day-data")[0];
     var11.innerText = other.day;
