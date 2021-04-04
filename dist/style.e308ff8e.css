@@ -7,6 +7,39 @@ body {
   font-family: ARCADECLASSIC;
 }
 
+.game-over {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over h1 {
+  font-size: 56px;
+  color: white;
+}
+
+.game-over .game-over-btn {
+  width: 200px;
+  font-size: 48px;
+  color: white;
+  cursor: pointer;
+  border: 2px solid white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over .game-over-btn:hover {
+  color: black;
+  background-color: white;
+}
+
 .window {
   width: 100vw;
   height: 100vh;
@@ -64,7 +97,7 @@ body {
   top: 10px;
   left: -33%;
 
-  transition: all 1.5s ease-in-out;
+  transition: all 1s ease-in-out;
 
   background-color: white;
 
@@ -121,7 +154,7 @@ body {
   bottom: 10px;
   right: -33%;
 
-  transition: all 1.5s ease-in-out;
+  transition: all 1s ease-in-out;
 
   background-color: white;
 
@@ -213,7 +246,7 @@ body {
   background-color: white;
   border: 2px solid black;
 
-  transition: bottom 1.5s ease-in-out;
+  transition: bottom 1s ease-in-out;
 }
 
 .panel-trigger-btn:hover {
@@ -231,7 +264,7 @@ body {
 
   background-color: white;
 
-  transition: all 1.5s ease-in-out;
+  transition: all 1s ease-in-out;
 
   border: 2px solid black;
 
@@ -275,7 +308,7 @@ body {
 }
 
 .panel .panel-core .panel-core-container {
-  width: 50%;
+  width: 33%;
   height: 100%;
   font-size: x-large;
 

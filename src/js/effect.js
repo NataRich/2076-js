@@ -24,14 +24,14 @@ export function removeInfoCardTransition() {
 
 export function addPanelTriggerButtonTransition() {
     var e = document.getElementsByClassName("panel-trigger-btn")[0];
-    if (!e.classList.contains("panel-trigger-btn-hide"))
-        e.classList.add("panel-trigger-btn-hide");
+    if (!e.classList.contains("panel-trigger-btn-follow"))
+        e.classList.add("panel-trigger-btn-follow");
 }
 
 export function removePanelTriggerButtonTransition() {
     var e = document.getElementsByClassName("panel-trigger-btn")[0];
-    if (e.classList.contains("panel-trigger-btn-hide"))
-        e.classList.remove("panel-trigger-btn-hide");
+    if (e.classList.contains("panel-trigger-btn-follow"))
+        e.classList.remove("panel-trigger-btn-follow");
 }
 
 export function addPanelTransition() {
@@ -44,4 +44,32 @@ export function removePanelTransition() {
     var e = document.getElementsByClassName("panel")[0];
     if (e.classList.contains("panel-show"))
         e.classList.remove("panel-show");
+}
+
+export function addGameOverTransition() {
+    var e = document.getElementsByClassName("game-over")[0];
+    if (!e.classList.contains("game-over-show"))
+        e.classList.add("game-over-show");
+}
+
+export function removeGameOverTransition() {
+    var e = document.getElementsByClassName("game-over")[0];
+    if (e.classList.contains("game-over-show"))
+        e.classList.remove("game-over-show");
+}
+
+export function addControlButtonTransition(type) {
+    var es = document.getElementsByClassName(type);
+    for (var i = 0; i < es.length; i++) {
+        if (!es[i].classList.contains("ctbn-button-disabled"))
+            es[i].classList.add("ctbn-button-disabled");
+    }
+}
+
+export function removeControlButtonTransition(type) {
+    var es = document.getElementsByClassName(type);
+    for (var i = 0; i < es.length; i++) {
+        if (es[i].classList.contains("ctbn-button-disabled"))
+            es[i].classList.remove("ctbn-button-disabled");
+    }
 }
