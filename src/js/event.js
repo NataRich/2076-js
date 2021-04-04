@@ -68,7 +68,7 @@ export function registerClickListenerForEventButton() {
     ebtn.addEventListener("click", () => {
         var strGroup = document.getElementsByClassName("result")[0].innerText.split(" ");
         var diff = Number.parseFloat(strGroup[strGroup.length - 1]);
-        diff = strGroup[strGroup.length - 2] === "Increased" ? diff : -diff;
+        diff = strGroup[strGroup.length - 3] === "Increased" ? diff : -diff;
         if ((diff > 0 && diff < 1) || (diff < 0 && diff > -1)) { // tech level
             specialEventChangeTechFactor(diff);
         } else { // crop production

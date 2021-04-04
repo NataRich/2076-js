@@ -235,7 +235,7 @@ var _varibale = require("./varibale");
 
 //  get food produced by farmers
 function getFarmersFoodGain() {
-  return _varibale.foodGain.farmer * _varibale.other.tf * _varibale.population.farmers;
+  return Math.floor(_varibale.foodGain.farmer * _varibale.other.tf * _varibale.population.farmers);
 } // get food consumed by farmers
 
 
@@ -806,7 +806,7 @@ function registerClickListenerForEventButton() {
   ebtn.addEventListener("click", function () {
     var strGroup = document.getElementsByClassName("result")[0].innerText.split(" ");
     var diff = Number.parseFloat(strGroup[strGroup.length - 1]);
-    diff = strGroup[strGroup.length - 2] === "Increased" ? diff : -diff;
+    diff = strGroup[strGroup.length - 3] === "Increased" ? diff : -diff;
 
     if (diff > 0 && diff < 1 || diff < 0 && diff > -1) {
       // tech level
@@ -924,7 +924,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59978" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65192" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

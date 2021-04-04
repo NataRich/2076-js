@@ -2,7 +2,7 @@ import { population, foodGain, foodCost, other } from './varibale';
 
 //  get food produced by farmers
 export function getFarmersFoodGain(){
-    return foodGain.farmer * other.tf * population.farmers;
+    return Math.floor(foodGain.farmer * other.tf * population.farmers);
 }
 
 // get food consumed by farmers
