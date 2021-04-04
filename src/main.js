@@ -1,6 +1,12 @@
 'use strict';
 
-// below for demonstration only
+import { getActiveOption, setButtons } from "./js/control";
+
+function setup() {
+    setButtons(getActiveOption());
+}
+
+setup();
 
 // register listeners
 var opts = document.getElementsByClassName("opt");
@@ -26,13 +32,5 @@ function chooseOption(e) {
     e.currentTarget.className = "opt active"
     
     // set buttons
-    var n = e.currentTarget.innerText === "Policies" ? 5 : 3;
-    var buttons = document.getElementsByClassName("buttons")[0];
-    buttons.innerHTML = ""; // clear 
-    for (var i = 0; i < n; i++) {
-        var node = document.createElement("div");
-        node.innerText = "Button";
-        node.className = "btn"
-        buttons.appendChild(node);
-    }
+    setButtons(getActiveOption())
 }

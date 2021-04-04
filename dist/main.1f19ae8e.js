@@ -117,9 +117,60 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-'use strict'; // below for demonstration only
-// register listeners
+})({"js/control.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setButtons = setButtons;
+exports.getActiveOption = getActiveOption;
+var OPTIONS = {
+  policies: {
+    count: 5,
+    options: ["Education Promotion", "Long-hour Farming", "Military Recruitment", "Military Retirement", "Scientist Retirement"]
+  },
+  research: {
+    count: 3,
+    options: ["Water", "Land", "Crops"]
+  }
+};
+
+function getOption(str) {
+  return str === "Policies" ? OPTIONS.policies : OPTIONS.research;
+}
+
+function setButtons(option) {
+  var buttons = document.getElementsByClassName("buttons")[0];
+  buttons.innerHTML = ""; // clear 
+
+  for (var i = 0; i < option.count; i++) {
+    var node = document.createElement("div");
+    node.innerText = option.options[i];
+    node.className = "btn";
+    buttons.appendChild(node);
+  }
+}
+
+function getActiveOption() {
+  var opts = document.getElementsByClassName("opt");
+
+  for (var i = 0; i < opts.length; i++) {
+    if (opts[i].classList.contains("active")) return getOption(opts[i].innerText);
+  }
+
+  return null;
+}
+},{}],"main.js":[function(require,module,exports) {
+'use strict';
+
+var _control = require("./js/control");
+
+function setup() {
+  (0, _control.setButtons)((0, _control.getActiveOption)());
+}
+
+setup(); // register listeners
 
 var opts = document.getElementsByClassName("opt");
 
@@ -144,18 +195,9 @@ function chooseOption(e) {
 
   e.currentTarget.className = "opt active"; // set buttons
 
-  var n = e.currentTarget.innerText === "Policies" ? 5 : 3;
-  var buttons = document.getElementsByClassName("buttons")[0];
-  buttons.innerHTML = ""; // clear 
-
-  for (var i = 0; i < n; i++) {
-    var node = document.createElement("div");
-    node.innerText = "Button";
-    node.className = "btn";
-    buttons.appendChild(node);
-  }
+  (0, _control.setButtons)((0, _control.getActiveOption)());
 }
-},{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./js/control":"js/control.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -183,7 +225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50217" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59653" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
