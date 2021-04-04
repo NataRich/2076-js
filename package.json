@@ -1,7 +1,7 @@
 {
-  "name": "test",
+  "name": "2076-js",
   "version": "1.0.0",
-  "description": "A JavaScript project",
+  "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "start": "node ./node_modules/parcel-bundler/bin/cli serve ./src/index.html --port 8080",
