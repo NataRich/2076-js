@@ -131,3 +131,19 @@ body {
 .overlay {
   position: absolute;
 }
+/*graphics style*/
+.cropland{
+  font-size: 0;
+  z-index: 0;
+  display: flex;
+  position: relative;
+  height: 150px;
+  width: auto;
+}
+.background_item{
+z-index: 0.5;
+height: 100px;
+width: auto;
+display: flex;
+position: relative;
+}
