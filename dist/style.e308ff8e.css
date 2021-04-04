@@ -225,7 +225,7 @@ body {
 
 .background_item{
   z-index: 0.5;
-  height: 100px;
+  height: 20%;
   width: auto;
   display: flex;
   position: relative;

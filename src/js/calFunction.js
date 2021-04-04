@@ -1,3 +1,4 @@
+
 //inital food when games starts
 var initalfood = 2000;
 
@@ -28,6 +29,7 @@ class other{
         //day, tf,
         this.day = 0;
         this.tf = 1;
+        this.count = 0;
     }
 }
 
@@ -76,13 +78,11 @@ function task3(){
     return (successrate > 1) ? possibility3[Math.floor(Math.random() * possibility3.length)] : 0;
 }
 
-/* return the rate of a criminal transforming to 
+/* return a boolean of a criminal transforming to 
  a underarrest criminal (call this function each day once)*/
 function ifcriminalArrested(){
-    if ((samplePop.criminalPop - samplePop.soldierPop) >= 0){
-    }
-    let rate = Math.random(10)/10 * 0.8;
-    return rate;
+    let rate = Math.floor(Math.random()*10) % 2; //about 50%
+    return (rate == 0)? true: false;
 }
 
 /* final step to aggregated all food product and consumption
@@ -92,9 +92,11 @@ function foodleft(){
     return total;
 }
 
+function ifGameContinue(){
+    return (foodleft() > 0) ? true : false;
+}
 
-
-
+//personal tests below
 console.log(getFarmerFood())
 console.log(getCriFood())
 console.log(getSciFood())
@@ -103,3 +105,6 @@ console.log(task1())
 console.log(task2())
 console.log(task3())
 console.log(foodleft())
+console.log(ifcriminalArrested())
+console.log(ifGameContinue())
+console.log("Test Ended")
