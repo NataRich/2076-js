@@ -15,10 +15,10 @@ export function registerClickListenerForNextDayButton() {
         resetPolicyAndResearchCount();
         updatePanelData();
         updateControlButtonStyle();
+        removeEventCardTransition();
+        removeInfoCardTransition();
         if (cal.isGameOver()) {
             addGameOverTransition();
-            removeEventCardTransition();
-            removeInfoCardTransition();
         } else {
             randomGenerateEventCard();
         }

@@ -38,7 +38,7 @@ export var population = {
 }
 
 export var foodGain = {
-    farmer: 10
+    farmer: 20
 }
 
 export var foodCost = {

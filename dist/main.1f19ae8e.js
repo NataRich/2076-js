@@ -160,7 +160,7 @@ var population = {
 };
 exports.population = population;
 var foodGain = {
-  farmer: 10
+  farmer: 20
 };
 exports.foodGain = foodGain;
 var foodCost = {
@@ -226,6 +226,8 @@ exports.longHourFarming = longHourFarming;
 exports.militaryRecruitment = militaryRecruitment;
 exports.militaryRetirement = militaryRetirement;
 exports.catchIfShould = catchIfShould;
+exports.specialEventChangeTechFactor = specialEventChangeTechFactor;
+exports.specialEventChangeCropProduction = specialEventChangeCropProduction;
 exports.isGameOver = isGameOver;
 exports.naturalUpdateVariables = naturalUpdateVariables;
 
@@ -263,25 +265,25 @@ function getSoldiersFoodCost() {
 
 
 function waterResearch() {
-  var possibility1 = [0.5, 0.6, 0.7, 0.8];
+  var possibility1 = [0.5, 0.55, 0.7, 0.75];
   var successrate = (0.3 * _varibale.population.scientists - 0.006 * _varibale.population.scientists ^ 2) * 0.2;
-  _varibale.other.tf += successrate > 1 ? possibility1[Math.floor(Math.random() * possibility1.length)] : 0;
+  _varibale.other.tf += successrate > 1 ? possibility1[Math.floor(Math.random() * 10) % possibility3.length] : 0;
   _varibale.other.researchCount += 1;
 } // tf gained from landResearch, tf += 0.3 - 0.5 with 0.4 * mdrf
 
 
 function landResearch() {
-  var possibility2 = [0.3, 0.4, 0.5];
+  var possibility2 = [0.25, 0.4, 0.5];
   var successrate = (0.3 * _varibale.population.scientists - 0.006 * _varibale.population.scientists ^ 2) * 0.34;
-  _varibale.other.tf += successrate > 1 ? possibility2[Math.floor(Math.random() * possibility2.length)] : 0;
+  _varibale.other.tf += successrate > 1 ? possibility2[Math.floor(Math.random() * 10) % possibility2.length] : 0;
   _varibale.other.researchCount += 1;
 } // tf gained from cropResearch, tf += 0.2 - 0.3 with 0.6 * mdrf
 
 
 function cropResearch() {
-  var possibility3 = [0.2, 0.3];
+  var possibility3 = [0.2, 0.25];
   var successrate = (0.3 * _varibale.population.scientists - 0.006 * _varibale.population.scientists ^ 2) * 0.6;
-  _varibale.other.tf += successrate > 1 ? possibility3[Math.floor(Math.random() * possibility3.length)] : 0;
+  _varibale.other.tf += successrate > 1 ? possibility3[Math.floor(Math.random() * 10) % possibility3.length] : 0;
   _varibale.other.researchCount += 1;
 }
 
@@ -331,6 +333,14 @@ function catchIfShould() {
     _varibale.population.criminals -= 1;
     _varibale.population.prisoners += 1;
   }
+}
+
+function specialEventChangeTechFactor(amount) {
+  _varibale.other.tf += amount;
+}
+
+function specialEventChangeCropProduction(amount) {
+  _varibale.foodGain.farmer += amount;
 }
 
 function isGameOver() {
@@ -746,15 +756,21 @@ Object.defineProperty(exports, "__esModule", {
 exports.randomGenerateEventCard = randomGenerateEventCard;
 exports.registerClickListenerForEventButton = registerClickListenerForEventButton;
 
+var _calFunction = require("./calFunction");
+
 var _effect = require("./effect");
+
+var _panel = require("./panel");
 
 var SUBJECTS = ["Fuel Leakage", "Gifts From Future", "Farmer Riots"];
 var ACTIONS = [{
   type: "Increased",
-  desc: ["How cyberpunk! The water nearby was improved after absorbing the fuel!", "Amazing! A high-tech machine from future was found by a farmer yesterday in the farm largely increasing the standard of living!", "What? Farmers started a riot yesterday but ended up improving our life!"]
+  desc: ["How cyberpunk! The water nearby was improved after absorbing the fuel!", "Amazing! A high-tech machine from future was found by a farmer yesterday in the farm largely increasing the standard of living!", "What? Farmers started a riot yesterday but ended up improving our life!"],
+  effect: [[5, 0.1], [8, 0.3], [3, 0.1]]
 }, {
   type: "Decreased",
-  desc: ["Alert! The only water body nearby was contaminated last night due to the leakage of fuels in famers' bionic arms!", "Unfortunate! A scrapped machine was misused by farmers as a high-tech reducing the standard of living!", "Such a tragedy! Farmers started a riot yesterday! They damaged everything!"]
+  desc: ["Alert! The only water body nearby was contaminated last night due to the leakage of fuels in famers' bionic arms!", "Unfortunate! A scrapped machine was misused by farmers as a high-tech reducing the standard of living!", "Such a tragedy! Farmers started a riot yesterday! They damaged everything!"],
+  effect: [[-5, -0.1], [-8, -0.3], [-3, -0.1]]
 }];
 var TARGETS = ["Crop Production", "Technology Level"];
 
@@ -766,6 +782,7 @@ function generateEvent() {
     subject: SUBJECTS[subjectIndex],
     action: ACTIONS[actionIndex].type,
     desc: ACTIONS[actionIndex].desc[subjectIndex],
+    effect: ACTIONS[actionIndex].effect[subjectIndex][targetIndex],
     target: TARGETS[targetIndex]
   };
 }
@@ -773,7 +790,7 @@ function generateEvent() {
 function fillEventText(option) {
   document.getElementsByClassName("subject")[0].innerText = option.subject;
   document.getElementsByClassName("desc")[0].innerText = option.desc;
-  document.getElementsByClassName("result")[0].innerText = option.subject + " " + option.action + " " + option.target + ".";
+  document.getElementsByClassName("result")[0].innerText = (option.target + " " + option.action + " by " + option.effect + ".").replace("-", "");
 }
 
 function randomGenerateEventCard() {
@@ -788,10 +805,23 @@ function randomGenerateEventCard() {
 function registerClickListenerForEventButton() {
   var ebtn = document.getElementsByClassName("event-btn")[0];
   ebtn.addEventListener("click", function () {
-    return (0, _effect.removeEventCardTransition)();
+    var strGroup = document.getElementsByClassName("result")[0].innerText.split(" ");
+    var diff = Number.parseFloat(strGroup[strGroup.length - 1]);
+    diff = strGroup[strGroup.length - 2] === "Increased" ? diff : -diff;
+
+    if (diff > 0 && diff < 1 || diff < 0 && diff > -1) {
+      // tech level
+      (0, _calFunction.specialEventChangeTechFactor)(diff);
+    } else {
+      // crop production
+      (0, _calFunction.specialEventChangeCropProduction)(diff);
+    }
+
+    (0, _effect.removeEventCardTransition)();
+    (0, _panel.updatePanelData)();
   }, false);
 }
-},{"./effect":"js/effect.js"}],"js/lifecycle.js":[function(require,module,exports) {
+},{"./calFunction":"js/calFunction.js","./effect":"js/effect.js","./panel":"js/panel.js"}],"js/lifecycle.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -824,11 +854,11 @@ function registerClickListenerForNextDayButton() {
     (0, _varibale.resetPolicyAndResearchCount)();
     (0, _panel.updatePanelData)();
     (0, _control.updateControlButtonStyle)();
+    (0, _effect.removeEventCardTransition)();
+    (0, _effect.removeInfoCardTransition)();
 
     if (cal.isGameOver()) {
       (0, _effect.addGameOverTransition)();
-      (0, _effect.removeEventCardTransition)();
-      (0, _effect.removeInfoCardTransition)();
     } else {
       (0, _event.randomGenerateEventCard)();
     }
@@ -895,7 +925,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50006" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51762" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

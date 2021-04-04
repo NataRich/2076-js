@@ -32,25 +32,25 @@ export function getSoldiersFoodCost(){
 
 // tf gained from waterResearch, tf += 0.5 - 0.8 with 0.2 * mdrf
 export function waterResearch(){
-    let possibility1 = [0.5, 0.6, 0.7, 0.8];
+    let possibility1 = [0.5, 0.55, 0.7, 0.75];
     let successrate = (0.3 * population.scientists - 0.006 * (population.scientists)^2) * 0.2; 
-    other.tf += (successrate > 1) ? possibility1[Math.floor(Math.random() * possibility1.length)] : 0;
+    other.tf += (successrate > 1) ? possibility1[Math.floor(Math.random() * 10) % possibility3.length] : 0;
     other.researchCount += 1;
 }
 
 // tf gained from landResearch, tf += 0.3 - 0.5 with 0.4 * mdrf
 export function landResearch(){
-    let possibility2 = [0.3, 0.4, 0.5];
+    let possibility2 = [0.25, 0.4, 0.5];
     let successrate = (0.3 * population.scientists - 0.006*(population.scientists)^2) * 0.34; 
-    other.tf += (successrate > 1) ? possibility2[Math.floor(Math.random() * possibility2.length)] : 0;
+    other.tf += (successrate > 1) ? possibility2[Math.floor(Math.random() * 10) % possibility2.length] : 0;
     other.researchCount += 1;
 }
 
 // tf gained from cropResearch, tf += 0.2 - 0.3 with 0.6 * mdrf
 export function cropResearch(){
-    let possibility3 = [0.2, 0.3];
+    let possibility3 = [0.2, 0.25];
     let successrate = (0.3 * population.scientists - 0.006 * (population.scientists)^2) * 0.6; 
-    other.tf += (successrate > 1) ? possibility3[Math.floor(Math.random() * possibility3.length)] : 0;
+    other.tf += (successrate > 1) ? possibility3[Math.floor(Math.random() * 10) % possibility3.length] : 0;
     other.researchCount += 1;
 }
 
@@ -100,6 +100,14 @@ export function catchIfShould() {
         population.criminals -= 1;
         population.prisoners += 1;
     }
+}
+
+export function specialEventChangeTechFactor(amount) {
+    other.tf += amount;
+}
+
+export function specialEventChangeCropProduction(amount) {
+    foodGain.farmer += amount;
 }
 
 export function isGameOver(){

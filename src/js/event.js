@@ -1,4 +1,6 @@
+import { specialEventChangeCropProduction, specialEventChangeTechFactor } from "./calFunction";
 import { addEventCardTransition, removeEventCardTransition } from "./effect"
+import { updatePanelData } from "./panel";
 
 const SUBJECTS = ["Fuel Leakage", "Gifts From Future", "Farmer Riots"]
 
@@ -9,6 +11,11 @@ const ACTIONS = [
             "How cyberpunk! The water nearby was improved after absorbing the fuel!",
             "Amazing! A high-tech machine from future was found by a farmer yesterday in the farm largely increasing the standard of living!",
             "What? Farmers started a riot yesterday but ended up improving our life!"
+        ],
+        effect: [
+            [5, 0.1],
+            [8, 0.3],
+            [3, 0.1]
         ]
     },
     {
@@ -17,6 +24,11 @@ const ACTIONS = [
             "Alert! The only water body nearby was contaminated last night due to the leakage of fuels in famers' bionic arms!",
             "Unfortunate! A scrapped machine was misused by farmers as a high-tech reducing the standard of living!",
             "Such a tragedy! Farmers started a riot yesterday! They damaged everything!"
+        ],
+        effect: [
+            [-5, -0.1],
+            [-8, -0.3],
+            [-3, -0.1]
         ]
     }
 ]
@@ -32,6 +44,7 @@ function generateEvent() {
         subject: SUBJECTS[subjectIndex],
         action: ACTIONS[actionIndex].type,
         desc: ACTIONS[actionIndex].desc[subjectIndex],
+        effect: ACTIONS[actionIndex].effect[subjectIndex][targetIndex],
         target: TARGETS[targetIndex]
     }
 }
@@ -39,7 +52,7 @@ function generateEvent() {
 function fillEventText(option) {
     document.getElementsByClassName("subject")[0].innerText = option.subject;
     document.getElementsByClassName("desc")[0].innerText = option.desc;
-    document.getElementsByClassName("result")[0].innerText = option.subject + " " + option.action + " " + option.target + ".";
+    document.getElementsByClassName("result")[0].innerText = (option.target + " " + option.action + " by " + option.effect + ".").replace("-", "");
 }
 
 export function randomGenerateEventCard() {
@@ -52,5 +65,16 @@ export function randomGenerateEventCard() {
 
 export function registerClickListenerForEventButton() {
     var ebtn = document.getElementsByClassName("event-btn")[0];
-    ebtn.addEventListener("click", () => removeEventCardTransition(), false);
+    ebtn.addEventListener("click", () => {
+        var strGroup = document.getElementsByClassName("result")[0].innerText.split(" ");
+        var diff = Number.parseFloat(strGroup[strGroup.length - 1]);
+        diff = strGroup[strGroup.length - 2] === "Increased" ? diff : -diff;
+        if ((diff > 0 && diff < 1) || (diff < 0 && diff > -1)) { // tech level
+            specialEventChangeTechFactor(diff);
+        } else { // crop production
+            specialEventChangeCropProduction(diff);
+        }
+        removeEventCardTransition();
+        updatePanelData();
+    }, false);
 }
